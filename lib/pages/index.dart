@@ -41,7 +41,7 @@ class IndexState extends State<Index> {
 Container buildNavBar(BuildContext context, int currentIndex, Function(int) onTap) {
 
   Color iconColor(int index) {
-    return currentIndex == index ? Colors.black : Colors.grey;
+    return currentIndex == index ? Colors.orange : Colors.grey;
   }
   return Container(
     height: 60,
