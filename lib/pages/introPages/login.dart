@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import '../mainPages/home.dart';
+// import 'package:pethub/pages/mainPages/index.dart';
+// import '../mainPages/home.dart';
+import '../mainPages/index.dart';
 import 'register.dart';
 
 class LoginPage extends StatelessWidget {
@@ -90,7 +92,7 @@ class LoginPage extends StatelessWidget {
                       PageTransition(
                         type: PageTransitionType.fade,
                         duration: Duration(milliseconds: 250),
-                        child: HomePage(),
+                        child: Index(),
                       ),
                     );
                   },
