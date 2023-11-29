@@ -62,8 +62,47 @@ class ForumPage extends StatelessWidget {
                   ],
                 ),
               ],
-            )
+            ),
+            SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                buildCategoryBox('c/dogs'),
+                buildCategoryBox('c/cats'),
+                buildCategoryBox('c/snake'),
+                buildCategoryBox('c/hamsters'),
+                buildCategoryBox('c/lovebirds'),
+              ],
+            ),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                buildCategoryBox('c/gecko'),
+                buildCategoryBox('c/turtle'),
+                buildCategoryBox('c/tortoise'),
+                buildCategoryBox('c/kitten'),
+                buildCategoryBox('c/iguana'),
+              ],
+            ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildCategoryBox(String categoryName) {
+    return Container(
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: Colors.grey, // Warna latar belakang kotak
+      ),
+      child: Text(
+        categoryName,
+        style: TextStyle(
+          color:
+              const Color.fromARGB(255, 0, 0, 0), // Warna teks di dalam kotak
         ),
       ),
     );
