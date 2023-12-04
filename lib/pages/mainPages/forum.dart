@@ -94,17 +94,31 @@ class _ForumPageState extends State<ForumPage> {
             ),
             SizedBox(height: 20),
             SizedBox(height: 16),
-            ForumPostWidget(
-              username: 'john_doe',
-              category: 'c/dogs',
-              title: 'Cara Merawat Anjing',
-              content: 'Pedigree',
-            ),
-            ForumPostWidget(
-                username: 'tes',
-                category: 'c/cats',
-                title: 'Snacks',
-                content: 'Royal Cannin'),
+            Expanded(
+                child: ListView(
+              children: [
+                ForumPostWidget(
+                  username: 'john_doe',
+                  category: 'c/dogs',
+                  title: 'Cara Merawat Anjing',
+                  content: 'Pedigree',),
+                ForumPostWidget(
+                    username: 'tes',
+                    category: 'c/cats',
+                    title: 'Snacks',
+                    content: 'Royal Cannin'),
+                ForumPostWidget(
+                    username: 'tes',
+                    category: 'c/cats',
+                    title: 'Snacks',
+                    content: 'Royal Cannin'),
+                ForumPostWidget(
+                    username: 'tes',
+                    category: 'c/cats',
+                    title: 'Snacks',
+                    content: 'Royal Cannin'),
+              ],
+            )),
           ],
         ),
       ),
