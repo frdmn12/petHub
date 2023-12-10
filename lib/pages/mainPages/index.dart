@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:pethub/pages/home_page.dart';
-import './forum_page.dart';
-import './map_page.dart';
-import './profil_page.dart';
+import './home.dart';
+import './forum.dart';
+import './map.dart';
+import './profile.dart';
 
 class Index extends StatefulWidget {
   const Index({super.key});
@@ -15,10 +15,10 @@ class IndexState extends State<Index> {
   int pageIndex = 0;
 
   final pages = [
-    const HomePage(),
+    HomePage(),
     const ForumPage(),
     const MapPage(),
-    const ProfilPage(),
+    const ProfilePage(),
   ];
 
   
@@ -87,4 +87,3 @@ Container buildNavBar(BuildContext context, int currentIndex, Function(int) onTa
     ),
   );
 }
-
