@@ -11,6 +11,57 @@ class ForumPage extends StatefulWidget {
 class _ForumPageState extends State<ForumPage> {
   List<bool> isSelected = List.generate(10, (index) => false);
 
+  TextEditingController titleController = TextEditingController();
+  TextEditingController categoryController = TextEditingController();
+  TextEditingController contentController = TextEditingController();
+  void _showAddForumDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Tambah Forum'),
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                TextField(
+                  controller: titleController,
+                  decoration: InputDecoration(labelText: 'Title'),
+                ),
+                TextField(
+                  controller: categoryController,
+                  decoration: InputDecoration(labelText: 'Kategori Forum'),
+                ),
+                TextField(
+                  controller: contentController,
+                  decoration: InputDecoration(labelText: 'Isi Forum'),
+                  maxLines: 3,
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Batal'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Simpan'),
+              onPressed: () {
+                // Implementasi logika untuk menyimpan forum
+                // Anda bisa menggunakan nilai dari controllers: titleController, categoryController, contentController
+                // Contoh: Simpan nilai ke dalam variabel atau kirim ke fungsi lain di sini
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,7 +152,8 @@ class _ForumPageState extends State<ForumPage> {
                   username: 'john_doe',
                   category: 'c/dogs',
                   title: 'Cara Merawat Anjing',
-                  content: 'Pedigree',),
+                  content: 'Pedigree',
+                ),
                 ForumPostWidget(
                     username: 'tes',
                     category: 'c/cats',
@@ -121,6 +173,13 @@ class _ForumPageState extends State<ForumPage> {
             )),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _showAddForumDialog(context);
+        },
+        child: Icon(Icons.add),
+        tooltip: 'Buat Forum',
       ),
     );
   }
