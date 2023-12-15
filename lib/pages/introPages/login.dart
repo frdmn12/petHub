@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pethub/services/auth.dart';
+import 'package:pethub/shared/loading.dart';
 // import 'package:pethub/pages/mainPages/index.dart';
 // import '../mainPages/home.dart';
 import '../mainPages/index.dart';
@@ -20,6 +21,8 @@ class _LoginPageState extends State<LoginPage> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
 
+  bool loading = false;
+
   // text field state
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -27,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
         backgroundColor: const Color(0xFFFFC727),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -129,13 +132,19 @@ class _LoginPageState extends State<LoginPage> {
                     ElevatedButton(
                       onPressed: () async {
                        if (_formKey.currentState!.validate()) {
+                          setState(() => loading = true);
                           dynamic result =
                               await _auth.signInWithEmailAndPasssword(
                                   _emailController.text,
                                   _passwordController.text);
                           if (result == null) {
-                            setState(() => _erorrController.text =
-                                'Could not sign in!');
+                            setState(() {
+                              loading = false;
+                            _erorrController.text =
+                                'Could not sign in!';
+
+                            } 
+                                );
                           } 
                         }
                       },

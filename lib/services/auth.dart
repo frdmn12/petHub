@@ -6,7 +6,7 @@ class AuthService {
 
   // create user obj based on FirebaseUser
   MyUser? _userfromFirebase(User user) {
-    return user != null ? MyUser(uid: user.uid) : null;
+    return user != null ? MyUser(uid: user.uid, email: user.email, name: firstName) : null;
   }
 
   // auth change user stream
@@ -16,6 +16,7 @@ class AuthService {
         .map((User? user) => _userfromFirebase(user!));
   }
 
+// getter
  User? get currentUser {
     return _auth.currentUser;
   }

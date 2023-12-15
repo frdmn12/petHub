@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:pethub/models/forum.dart';
+import 'package:pethub/pages/mainPages/createForum.dart';
+import 'package:pethub/pages/mainPages/findForum.dart';
+import 'package:pethub/services/auth.dart';
+import 'package:pethub/services/database.dart';
 
 class ForumPage extends StatefulWidget {
   const ForumPage({super.key});
@@ -11,57 +17,14 @@ class ForumPage extends StatefulWidget {
 class _ForumPageState extends State<ForumPage> {
   List<bool> isSelected = List.generate(10, (index) => false);
 
+  AuthService authService = AuthService();
+  final DatabaseService _database = DatabaseService();
+
   TextEditingController titleController = TextEditingController();
   TextEditingController categoryController = TextEditingController();
   TextEditingController contentController = TextEditingController();
-  void _showAddForumDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Tambah Forum'),
-          content: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                TextField(
-                  controller: titleController,
-                  decoration: InputDecoration(labelText: 'Title'),
-                ),
-                TextField(
-                  controller: categoryController,
-                  decoration: InputDecoration(labelText: 'Kategori Forum'),
-                ),
-                TextField(
-                  controller: contentController,
-                  decoration: InputDecoration(labelText: 'Isi Forum'),
-                  maxLines: 3,
-                ),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Batal'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: Text('Simpan'),
-              onPressed: () {
-                // Implementasi logika untuk menyimpan forum
-                // Anda bisa menggunakan nilai dari controllers: titleController, categoryController, contentController
-                // Contoh: Simpan nilai ke dalam variabel atau kirim ke fungsi lain di sini
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
 
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,8 +33,8 @@ class _ForumPageState extends State<ForumPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 30),
-            Row(
+            const SizedBox(height: 30),
+            const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Column(
@@ -88,23 +51,34 @@ class _ForumPageState extends State<ForumPage> {
                 ),
               ],
             ),
-            SizedBox(
-                height: 20), // Menambah ruang kosong antara teks dan search bar
+            const SizedBox(height: 20),
             Container(
-              width: double.infinity, // Menggunakan lebar penuh
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'Search Forum...',
-                  prefixIcon: Icon(Icons.search),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-              ),
+              width: double.infinity,
+              child: ElevatedButton(
+                  onPressed: () => {
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child:  FindForumPage(),
+                                type: PageTransitionType.leftToRight))
+                      },
+                  child: Icon(Icons.search)),
             ),
-            SizedBox(height: 16),
-            Row(
+            // Container(
+            //   width: double.infinity,
+            //   padding: const EdgeInsets.symmetric(horizontal: 20),
+            //   child: TextField(
+            //     decoration: InputDecoration(
+            //       hintText: 'Search Forum...',
+            //       prefixIcon: const Icon(Icons.search),
+            //       border: OutlineInputBorder(
+            //         borderRadius: BorderRadius.circular(8),
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            const SizedBox(height: 16),
+            const Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Column(
@@ -132,51 +106,44 @@ class _ForumPageState extends State<ForumPage> {
                 buildCategoryBox('c/lovebirds', 4),
               ],
             ),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                buildCategoryBox('c/gecko', 5),
-                buildCategoryBox('c/turtle', 6),
-                buildCategoryBox('c/tortoise', 7),
-                buildCategoryBox('c/kitten', 8),
-                buildCategoryBox('c/iguana', 9),
-              ],
-            ),
-            SizedBox(height: 20),
             SizedBox(height: 16),
             Expanded(
-                child: ListView(
-              children: [
-                ForumPostWidget(
-                  username: 'john_doe',
-                  category: 'c/dogs',
-                  title: 'Cara Merawat Anjing',
-                  content: 'Pedigree',
-                ),
-                ForumPostWidget(
-                    username: 'tes',
-                    category: 'c/cats',
-                    title: 'Snacks',
-                    content: 'Royal Cannin'),
-                ForumPostWidget(
-                    username: 'tes',
-                    category: 'c/cats',
-                    title: 'Snacks',
-                    content: 'Royal Cannin'),
-                ForumPostWidget(
-                    username: 'tes',
-                    category: 'c/cats',
-                    title: 'Snacks',
-                    content: 'Royal Cannin'),
-              ],
-            )),
+              child: StreamBuilder<List<Forum>>(
+                stream: _database.getForumList(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<Forum>> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return Center(child: Text('Tidak ada data.'));
+                  }
+                  return ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      Forum forum = snapshot.data![index];
+                      return ForumPostWidget(
+                        username: forum.name ?? '',
+                        category: forum.category,
+                        title: forum.category,
+                        content: forum.content,
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _showAddForumDialog(context);
+          Navigator.push(
+              context,
+              PageTransition(
+                  child: const CreateForumPage(),
+                  duration: const Duration(milliseconds: 400),
+                  type: PageTransitionType.leftToRight));
         },
         child: Icon(Icons.add),
         tooltip: 'Buat Forum',
