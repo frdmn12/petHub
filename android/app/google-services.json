@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "916071472173",
+    "project_id": "pethub-care",
+    "storage_bucket": "pethub-care.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:916071472173:android:80b7202add779b62096ca4",
+        "android_client_info": {
+          "package_name": "com.thepethub.pethub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUUk6wIzgHkrnC5hlR-3rA7Vu1Lusf9jg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:pethub/services/auth.dart';
 
 class HomePage extends StatelessWidget {
+  final AuthService _auth = AuthService();
+
   final List<String> items = [
     'Perawatan Gigi untuk Anjing dan Kucing',
     'Mengenali Tanda Tanda Kesehatan',
@@ -33,118 +36,147 @@ class HomePage extends StatelessWidget {
     return predefinedColors[Random().nextInt(predefinedColors.length)];
   }
 
+  Future<void> _setupMap() async {
+    // Lakukan inisialisasi GoogleMap di sini, misalnya:
+    await Future.delayed(
+        Duration(seconds: 2)); // Contoh penundaan selama 2 detik
+    // ... Kode inisialisasi GoogleMap lainnya
+  }
+
   @override
   Widget build(BuildContext context) {
+    String? firstName = _auth.firstName;
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 45),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+        padding: EdgeInsets.all(16.0),
+        child: Expanded(
+          child: ListView(
+            // crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: 45),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Hi ${firstName}' ?? 'Anonymous',
+                        style: TextStyle(
+                          fontSize: 23,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        'Good Morning',
+                        style: TextStyle(
+                          fontSize: 23,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                  InkWell(
+                    onTap: () {
+                      // Handle button tap (e.g., navigate to profile page)
+                    },
+                    child: CircleAvatar(
+                      radius: 25,
+                      backgroundImage:
+                          AssetImage('assets/images/Profile Photo.png'),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 40),
+              Text(
+                'Explorer',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 20),
+              SingleChildScrollView(
+                // Tambahkan SingleChildScrollView di sini
+                scrollDirection: Axis.horizontal,
+                child: Row(
                   children: [
-                    Text(
-                      'Hi, Adi',
-                      style: TextStyle(
-                        fontSize: 23,
-                        fontWeight: FontWeight.bold,
+                    for (var itemName in items)
+                      _buildExplorerItem(
+                        context,
+                        itemName,
+                        getRandomColor(),
                       ),
-                    ),
-                    Text(
-                      'Good Morning',
-                      style: TextStyle(
-                        fontSize: 23,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey,
-                      ),
-                    ),
                   ],
                 ),
-                InkWell(
-                  onTap: () {
-                    // Handle button tap (e.g., navigate to profile page)
-                  },
-                  child: CircleAvatar(
-                    radius: 25,
-                    backgroundImage:
-                        AssetImage('assets/images/Profile Photo.png'),
-                  ),
+              ),
+              SizedBox(height: 40),
+              Text(
+                'Forum',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
-              ],
-            ),
-            SizedBox(height: 40),
-            Text(
-              'Explorer',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
               ),
-            ),
-            SizedBox(height: 20),
-            Container(
-              height: 150,
-              child: ListView.builder(
+              SingleChildScrollView(
+                // Tambahkan SingleChildScrollView di sini
                 scrollDirection: Axis.horizontal,
-                itemCount: items.length,
-                itemBuilder: (context, index) {
-                  return _buildExplorerItem(
-                    context,
-                    items[index],
-                    getRandomColor(),
-                  );
-                },
+                child: Row(
+                  children: [
+                    for (var button in buttons)
+                      _buildButton(
+                        button['name'],
+                        button['icon'],
+                      ),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 40),
-            Text(
-              'Forum',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+              SizedBox(height: 40),
+              Text(
+                'Tag Place',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            Container(
-              height: 70,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: buttons.length,
-                itemBuilder: (context, index) {
-                  return _buildButton(
-                    buttons[index]['name'],
-                    buttons[index]['icon'],
-                  );
-                },
+              const SizedBox(
+                height: 40,
               ),
-            ),
-            SizedBox(height: 40),
-            Text(
-              'Tag Place',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Expanded(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Container(
-                  child: GoogleMap(
-                    myLocationButtonEnabled: true,
-                    zoomControlsEnabled: true,
-                    initialCameraPosition: CameraPosition(
-                      target: LatLng(-6.1753924, 106.8249641),
-                      zoom: 14.0,
+              Expanded(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height *
+                        0.5, // Sesuaikan dengan kebutuhan
+                    child: FutureBuilder<void>(
+                      future:
+                          _setupMap(), // Panggil fungsi yang menyiapkan GoogleMap
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(child: CircularProgressIndicator());
+                        } else if (snapshot.hasError) {
+                          return Center(
+                              child: Text('Error: ${snapshot.error}'));
+                        } else {
+                          return GoogleMap(
+                            myLocationButtonEnabled: true,
+                            zoomControlsEnabled: true,
+                            initialCameraPosition: CameraPosition(
+                              target: LatLng(-6.1753924, 106.8249641),
+                              zoom: 14.0,
+                            ),
+                          );
+                        }
+                      },
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
