@@ -44,6 +44,10 @@ dependencies:
   cloud_firestore: ^4.13.5
   provider: ^6.1.1
   flutter_spinkit: ^5.2.0
+  flutter_riverpod:
+  fab_circular_menu:
+  flutter_rating_stars:
+  flip_card:
 
 dev_dependencies:
   flutter_test:
@@ -84,3 +88,20 @@ flutter:
     - family: Rubik Bubbles
       fonts:
         - asset: assets/fonts/RubikBubbles-Regular.ttf
+    - family: WorkSans
+      fonts:
+        - asset: assets/fonts/WorkSans-Regular.ttf
+        - asset: assets/fonts/WorkSans-Italic.ttf
+          style: italic
+        - asset: assets/fonts/WorkSans-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/WorkSans-SemiBold.ttf
+          weight: 500
+        - asset: assets/fonts/WorkSans-Light.ttf
+          weight: 200
+        - asset: assets/fonts/WorkSans-Thin.ttf
+          weight: 300
+        - asset: assets/fonts/WorkSans-Medium.ttf
+          weight: 400
+        - asset: assets/fonts/WorkSans-ExtraLight.ttf
+          weight: 100
