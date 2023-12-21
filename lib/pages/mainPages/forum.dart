@@ -6,6 +6,7 @@ import 'package:pethub/pages/mainPages/createForum.dart';
 import 'package:pethub/pages/mainPages/findForum.dart';
 import 'package:pethub/services/auth.dart';
 import 'package:pethub/services/database.dart';
+import 'package:pethub/pages/mainPages/commentPage.dart';
 
 class ForumPage extends StatefulWidget {
   const ForumPage({super.key});
@@ -24,7 +25,6 @@ class _ForumPageState extends State<ForumPage> {
   TextEditingController categoryController = TextEditingController();
   TextEditingController contentController = TextEditingController();
 
- 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +59,7 @@ class _ForumPageState extends State<ForumPage> {
                         Navigator.push(
                             context,
                             PageTransition(
-                                child:  FindForumPage(),
+                                child: FindForumPage(),
                                 type: PageTransitionType.leftToRight))
                       },
                   child: Icon(Icons.search)),
@@ -127,6 +127,7 @@ class _ForumPageState extends State<ForumPage> {
                         category: forum.category,
                         title: forum.category,
                         content: forum.content,
+                        forum: forum,
                       );
                     },
                   );
@@ -180,12 +181,14 @@ class ForumPostWidget extends StatelessWidget {
   final String category;
   final String title;
   final String content;
+  final Forum forum;
 
   ForumPostWidget({
     required this.username,
     required this.category,
     required this.title,
     required this.content,
+    required this.forum,
   });
 
   @override
@@ -233,7 +236,6 @@ class ForumPostWidget extends StatelessWidget {
                         // Implement like functionality
                       },
                     ),
-                    Text('Like'),
                   ],
                 ),
                 Row(
@@ -244,7 +246,22 @@ class ForumPostWidget extends StatelessWidget {
                         // Implement dislike functionality
                       },
                     ),
-                    Text('Dislike'),
+                  ],
+                ),
+                Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.comment),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                CommentPage(forumId: forum.id),
+                          ),
+                        );
+                      },
+                    ),
                   ],
                 ),
                 Row(
@@ -255,7 +272,6 @@ class ForumPostWidget extends StatelessWidget {
                         // Implement share functionality
                       },
                     ),
-                    Text('Share'),
                   ],
                 ),
               ],
