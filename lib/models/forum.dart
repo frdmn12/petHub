@@ -1,3 +1,5 @@
+import 'package:pethub/models/comment.dart';
+
 class Forum {
   final String id;
   final String? name;
@@ -5,6 +7,7 @@ class Forum {
   final String category;
   final String content;
   final String uid;
+  final List<Comment> comments;
 
   Forum({
     required this.id,
@@ -13,6 +16,7 @@ class Forum {
     required this.category,
     required this.content,
     required this.uid,
+    required this.comments,
   });
 
   factory Forum.fromMap(Map<String, dynamic> map) {
@@ -23,8 +27,11 @@ class Forum {
       category: map['category'],
       content: map['content'],
       uid: map['uid'],
+      comments: [],
     );
   }
+
+  get title => null;
 
   Map<String, dynamic> toMap() {
     return {
@@ -43,5 +50,6 @@ class Forum {
       email: json['email'],
       category: json['category'],
       content: json['content'],
-      uid: json['uid']);
+      uid: json['uid'],
+      comments: []);
 }
