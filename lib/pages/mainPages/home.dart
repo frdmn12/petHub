@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:pethub/pages/mainPages/InformationPage.dart';
 import 'package:pethub/services/auth.dart';
 
 class HomePage extends StatelessWidget {
@@ -103,11 +104,12 @@ class HomePage extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
-                    for (var itemName in items)
+                    for (var i = 0; i < items.length; i++)
                       _buildExplorerItem(
                         context,
-                        itemName,
+                        items[i],
                         getRandomColor(),
+                        i,
                       ),
                   ],
                 ),
@@ -183,7 +185,7 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildExplorerItem(
-      BuildContext context, String itemName, Color boxColor) {
+      BuildContext context, String itemName, Color boxColor, int Index_check) {
     return Container(
       width: 210,
       height: 105,
@@ -209,7 +211,12 @@ class HomePage extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  // Handle button press (e.g., navigate to a different page)
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DetailPage(index1: Index_check),
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   primary: const Color.fromARGB(255, 0, 0, 0),
