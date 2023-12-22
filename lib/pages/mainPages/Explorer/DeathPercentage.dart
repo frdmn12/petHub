@@ -27,7 +27,7 @@ class DeathPercentage extends StatelessWidget {
               _buildListItem('2. Trauma dan Kecelakaan',
                   'Trauma dan kecelakaan seperti Cedera fisik, kecelakaan kendaraan, atau trauma lainnya dapat menyebabkan kematian mendadak apabila kita salah dalam merawat mereka. Sehingga kita perlu memberikan perhatian lebih atau khusus pada anabul yang baru saja mengalami sebuah kecelakaan atau trauma untuk membuat mereka terhindar dari traumatic tersebut.'),
               _buildListItem('3. Faktor Usia',
-                  'Tidak daoat dipungkiri lagi bahwa kematian pada anabul juga kebanyakan disebabkan oleh faktor usia. Sehingga kita perlu untuk memastikan bahwa kita sudah melakukan treatment yang baik pada anabul kita.'),
+                  'Tidak dapat dipungkiri lagi bahwa kematian pada anabul juga kebanyakan disebabkan oleh faktor usia. Sehingga kita perlu untuk memastikan bahwa kita sudah melakukan treatment yang baik pada anabul kita.'),
               _buildListItem('4. Kanker',
                   'Kematian anabul juga kebanyakan disebabkan oleh penyakit kanker seperti, kanker kulit, tulang, dan kelenjar getah bening. Biasanya penyakit ini bermula dari pola makan atau makanan yang diberikan pada anabul yang tidak sesuai karena tidak semua makanan manusia baik untuk anabul.'),
             ],
