@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pethub/models/comment.dart';
 import 'package:pethub/models/forum.dart';
+import 'package:pethub/services/auth.dart';
 import 'package:pethub/services/database.dart';
 import 'package:keyboard_attachable/keyboard_attachable.dart';
 
@@ -16,6 +17,7 @@ class CommentPage extends StatefulWidget {
 class _CommentPageState extends State<CommentPage> {
   final TextEditingController commentController = TextEditingController();
   final DatabaseService _database = DatabaseService();
+  final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -140,10 +142,11 @@ class _CommentPageState extends State<CommentPage> {
                   String commentContent = commentController.text.trim();
                   if (commentContent.isNotEmpty) {
                     String userId = await _database.getCurrentUserId();
+                    String? firstName = await _auth.firstName;
 
                     Comment newComment = Comment(
                       id: DateTime.now().millisecondsSinceEpoch.toString(),
-                      userId: userId,
+                      userId: firstName ?? 'No Name',
                       content: commentContent,
                     );
 

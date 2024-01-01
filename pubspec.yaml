@@ -49,6 +49,7 @@ dependencies:
   keyboard_attachable: ^2.2.0
   flutter_keyboard_visibility: ^5.4.1
   chat_gpt_flutter: ^1.0.15
+  riverpod: ^2.4.9
 
 dev_dependencies:
   flutter_test:
