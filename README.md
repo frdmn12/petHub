@@ -1,16 +1,15 @@
 # pethub
 
-A new Flutter project projectttt
+PetCareHub adalah aplikasi mobile yang didesain khusus untuk membantu pemilik hewan peliharaan menemukan dan bergabung dengan forum berdiskusi tentang kesehatan hewan, serta menawarkan berbagai fitur berguna lainnya.
 
-## Getting Started
+## Contributor
 
-This project is a starting point for a Flutter application.
+[![](https://github.com/frdmn12.png?size=50)](https://github.com/frdmn12)
+[![](https://github.com/MarcelinoHansSetiaBudi.png?size=50)](https://github.com/MarcelinoHansSetiaBudi)
+[![](https://github.com/FaridzMuhammad.png?size=50)](https://github.com/FaridzMuhammad)
+[![](https://github.com/YogaAgeng.png?size=50)](https://github.com/YogaAgeng)
 
-A few resources to get you started if this is your first Flutter project:
+## Preview Page
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Frame13](assets/Frame13.jpg)
+![Frame14](assets/Frame14.jpg)
